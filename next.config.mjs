@@ -12,6 +12,8 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['recharts', '@fullcalendar/react'],
   },
+  // Don't try to build API routes as static pages
+  staticPageGenerationTimeout: 1000,
 };
 
 export default nextConfig;
