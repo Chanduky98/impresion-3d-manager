@@ -5,14 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/build.js",
-    "build:next": "next build",
-    "postinstall": "prisma generate",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "prisma:migrate:turso": "node scripts/migrate-turso.js",
     "seed": "ts-node --skip-project prisma/seed.ts"
   },
   "dependencies": {
