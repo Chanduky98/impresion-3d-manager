@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { NextRequest, NextResponse } from "next/server"
 import { createUser, getUserByEmail } from "@/lib/auth"
 import { withCORS } from "@/lib/middleware"

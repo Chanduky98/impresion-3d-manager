@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { NextRequest, NextResponse } from "next/server"
 import { invalidateSession } from "@/lib/auth"
 import { withCORS } from "@/lib/middleware"

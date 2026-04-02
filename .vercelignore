@@ -1,0 +1,7 @@
+.env.local
+dev.db
+dev.db-shm
+dev.db-wal
+.git
+node_modules
+.next/cache

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { getUserByEmail, verifyPassword, createSession } from "@/lib/auth"
 import { withCORS } from "@/lib/middleware"
 
+export const dynamic = "force-dynamic"
+
 export async function OPTIONS() {
   return withCORS(NextResponse.json({}))
 }
