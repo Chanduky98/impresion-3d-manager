@@ -6,7 +6,7 @@ echo.
 
 REM Verificar si es la primera vez (no existe dev.db)
 if not exist "dev.db" (
-    echo [1/3] Primera ejecucion - instalando y configurando...
+    echo [1/4] Primera ejecucion - instalando y configurando...
     echo.
     
     REM Instalar dependencias
@@ -39,7 +39,7 @@ if not exist "dev.db" (
     echo OK
     echo.
 ) else (
-    echo [1/3] Base de datos ya existe
+    echo [1/4] Base de datos ya existe
     echo.
     
     REM Solo actualizar dependencias si package.json cambio
@@ -50,10 +50,20 @@ if not exist "dev.db" (
 )
 
 echo ========================================
-echo [2/3] Iniciando servidor...
+echo [2/4] Iniciando servidor...
 echo ========================================
 echo.
 echo URL: http://localhost:3000
+echo.
+
+REM Esperar 3 segundos para que Next.js inicie
+timeout /t 3 /nobreak
+
+REM Abrir navegador
+echo [3/4] Abriendo navegador...
+start http://localhost:3000
+
+echo [4/4] Listo!
 echo.
 echo Presiona Ctrl+C para detener el servidor
 echo.
