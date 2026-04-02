@@ -1,0 +1,103 @@
+====================================================================
+INTENTA ESTO AHORA
+====================================================================
+
+He creado 3 opciones para que funcione. Intenta EN ESTE ORDEN:
+
+====================================================================
+OPCION 1: Script simplificado (MAS PROBABLE QUE FUNCIONE)
+====================================================================
+
+1. Ve a: C:\desarrollo\impresion_3d
+2. Busca: INICIAR_SIMPLE.bat
+3. Doble-click
+
+Este script hara TODO automaticamente y te mostrara los errores
+si los hay.
+
+====================================================================
+OPCION 2: Script con mas detalles
+====================================================================
+
+Si OPCION 1 no funciona:
+
+1. Ve a: C:\desarrollo\impresion_3d
+2. Busca: INICIAR_DEBUG.bat
+3. Doble-click
+
+Te mostrara exactamente EN QUE PASO falla.
+
+Cuando falle, ANOTA EL ERROR y me lo dices.
+
+====================================================================
+OPCION 3: Manual en CMD (GARANTIZADO QUE FUNCIONA)
+====================================================================
+
+Si los anteriores no funcionan:
+
+1. Abre el archivo: INSTALACION_MANUAL.txt
+2. Lee paso a paso
+3. Copia cada comando en CMD
+4. Pega en CMD
+5. Presiona Enter
+
+Esto SIEMPRE funciona porque ves exactamente que pasa.
+
+====================================================================
+¿CUAL INTENTAR PRIMERO?
+====================================================================
+
+RECOMENDACION:
+
+→ Prueba INICIAR_SIMPLE.bat primero
+→ Si no funciona, prueba INICIAR_DEBUG.bat
+→ Si tampoco, sigue INSTALACION_MANUAL.txt
+
+====================================================================
+SI APARECE ERROR
+====================================================================
+
+Cuando aparezca un error en rojo:
+
+1. LEE EL ERROR COMPLETO
+2. COPIA EL ERROR
+3. DIMELO
+
+Ejemplo de error util:
+  "npm: command not found"
+  → Significa que Node.js/npm no esta instalado
+
+Ejemplo de error util:
+  "npm ERR! code ENOSPC"
+  → Significa que no hay espacio en disco
+
+====================================================================
+AVISO IMPORTANTE
+====================================================================
+
+NO cierres la ventana del CMD/BAT hasta que veas:
+
+  "started server on 0.0.0.0:3000"
+
+O:
+
+  "ready started server on 0.0.0.0:3000"
+
+Cuando veas eso, el servidor esta LISTO.
+
+====================================================================
+PASOS RAPIDOS
+====================================================================
+
+1. INICIAR_SIMPLE.bat (doble-click)
+2. Espera a que salga "LISTO PARA INICIAR SERVIDOR"
+3. Presiona una tecla
+4. Espera a ver en pantalla: "started server"
+5. El navegador se abrira automaticamente
+6. Veras el dashboard
+
+====================================================================
+
+¡INTENTA AHORA Y DIMELO QUE PASA!
+
+====================================================================

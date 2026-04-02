@@ -1,0 +1,50 @@
+{
+  "name": "impresion-3d-manager",
+  "version": "1.0.0",
+  "description": "Aplicación de gestión integral para impresión 3D",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:migrate:turso": "node scripts/migrate-turso.js",
+    "seed": "ts-node --skip-project prisma/seed.ts"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.2",
+    "@prisma/client": "^5.7.0",
+    "@types/bcryptjs": "^2.4.6",
+    "autoprefixer": "^10.4.16",
+    "axios": "^1.6.0",
+    "bcryptjs": "^3.0.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "dotenv": "^17.4.0",
+    "lucide-react": "^0.263.0",
+    "next": "^14.0.0",
+    "next-auth": "^4.24.13",
+    "next-themes": "^0.2.1",
+    "postcss": "^8.4.31",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.0",
+    "recharts": "^2.10.0",
+    "tailwind-merge": "^2.2.0",
+    "tailwindcss": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.3.0",
+    "zod": "^3.22.0",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "prisma": "^5.7.0",
+    "ts-node": "^10.9.1"
+  }
+}

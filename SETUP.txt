@@ -1,0 +1,139 @@
+====================================================================
+GESTOR DE IMPRESIÓN 3D - GUÍA DE INSTALACIÓN Y EJECUCIÓN
+====================================================================
+
+REQUISITOS PREVIOS:
+- Node.js 18+ instalado en el sistema
+- NPM (incluido con Node.js)
+
+BASE DE DATOS:
+- SQLite local (automático)
+- No requiere servidor externo
+- Se crea automáticamente en: ./prisma/dev.db
+
+INSTALACIÓN RÁPIDA:
+====================================================================
+
+1. OPCIÓN A - Usando el archivo de lotes (RECOMENDADO):
+   - Ejecuta: INICIAR.bat
+   - El sistema hará todo automáticamente:
+     * Instalará dependencias
+     * Creará la base de datos
+     * Cargará datos de ejemplo
+     * Iniciará el servidor
+     * Abrirá el navegador en http://localhost:3000/dashboard
+
+2. OPCIÓN B - Instalación manual:
+
+   Paso 1: Instalar dependencias
+   $ npm install
+
+   Paso 2: Crear la base de datos
+   $ npx prisma migrate dev --name init
+
+   Paso 3: Cargar datos de ejemplo
+   $ npx prisma db seed
+
+   Paso 4: Iniciar el servidor de desarrollo
+   $ npm run dev
+
+   Paso 5: Abrir en navegador
+   - URL: http://localhost:3000/dashboard
+
+DATOS DE ACCESO:
+====================================================================
+
+NO HAY AUTENTICACIÓN EN ESTA VERSIÓN
+- Acceso directo al dashboard
+- Todos los datos son locales
+
+DATOS DE EJEMPLO PRECARGADOS:
+- Impresoras: Creality Ender 3 Pro, Formlabs Form 3
+- Materiales: PLA Blanco, PETG Negro, Clear Resin
+- Piezas: 3 piezas de ejemplo
+- Órdenes: 2 órdenes con clientes
+- Clientes: Empresa ABC S.L., Tienda de Juguetes XYZ
+- Mantenimientos: Varios programados
+
+PARÁMETROS DE CONFIGURACIÓN:
+====================================================================
+
+Archivo: .env.local
+
+DATABASE_URL="file:./dev.db"
+NODE_ENV="development"
+
+Para cambiar coste de electricidad o moneda, editar en la página de
+Configuración dentro de la aplicación.
+
+Configuración por defecto:
+- Coste electricidad: 0.25€/kWh
+- Moneda: €
+- Margen beneficio: 30%
+
+COMMANDOS ÚTILES:
+====================================================================
+
+npm run dev          - Inicia servidor de desarrollo (con hot reload)
+npm run build        - Compila para producción
+npm run start        - Inicia servidor de producción
+npm run lint         - Revisa código
+npx prisma studio   - Abre interfaz visual de la base de datos
+npx prisma migrate dev --name <nombre>  - Crea nueva migración
+
+ESTRUCTURA DEL PROYECTO:
+====================================================================
+
+/app                 - Rutas y páginas de Next.js
+  /api              - Endpoints de API REST
+  /dashboard        - Página principal
+  /printers         - Gestión de impresoras
+  /pieces           - Gestión de piezas
+  /orders           - Gestión de pedidos
+  /clients          - Gestión de clientes
+  /materials        - Gestión de materiales
+  /maintenance      - Gestión de mantenimiento
+  /calendar         - Calendario de entregas
+  /settings         - Configuración
+
+/components         - Componentes React reutilizables
+/lib               - Utilidades, esquemas, cálculos
+/prisma            - Esquema de base de datos y seed
+
+SOLUCIÓN DE PROBLEMAS:
+====================================================================
+
+ERROR: "Module not found" al iniciar
+SOLUCIÓN: Ejecutar npm install nuevamente
+
+ERROR: "Port 3000 already in use"
+SOLUCIÓN: Cambiar puerto con: npm run dev -- -p 3001
+
+ERROR: Base de datos corrupta
+SOLUCIÓN: Eliminar ./prisma/dev.db y ejecutar setup nuevamente
+
+ERROR: Datos no aparecen
+SOLUCIÓN: Ejecutar npx prisma db seed nuevamente
+
+VERIFICAR INSTALACIÓN:
+====================================================================
+
+1. ¿Node.js instalado?
+   $ node --version
+   (Debe mostrar v18.0.0 o superior)
+
+2. ¿NPM instalado?
+   $ npm --version
+
+3. ¿Servidor corriendo?
+   - Abre navegador en http://localhost:3000/dashboard
+   - Deberías ver el dashboard
+
+CONTACTO / SOPORTE:
+====================================================================
+
+Para reportar problemas o sugerencias, revisar logs en consola.
+
+====================================================================
+Versión 1.0.0 - Abril 2024
+====================================================================

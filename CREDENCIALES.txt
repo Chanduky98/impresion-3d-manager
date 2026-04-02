@@ -1,0 +1,263 @@
+====================================================================
+GESTOR DE IMPRESIÓN 3D - CREDENCIALES Y CONFIGURACIÓN
+====================================================================
+
+🔐 SEGURIDAD Y ACCESO
+====================================================================
+
+ESTADO ACTUAL:
+- SIN AUTENTICACIÓN (Acceso directo)
+- NO HAY CONTRASEÑA
+- Base de datos local SQLite
+- Aplicación en localhost
+
+IMPORTANTE:
+Esta versión está diseñada para uso LOCAL en desarrollo.
+Para producción, se REQUIERE agregar autenticación.
+
+====================================================================
+
+📊 BASE DE DATOS
+====================================================================
+
+TIPO: SQLite
+UBICACIÓN: ./prisma/dev.db
+RUTA COMPLETA: C:\desarrollo\impresion_3d\prisma\dev.db
+
+ACCESO A BD:
+Para inspeccionar/editar datos directamente en la BD:
+$ npx prisma studio
+Esto abre una interfaz visual en: http://localhost:5555
+
+CONTRASEÑA BD: (SQLite no requiere contraseña)
+USUARIO BD: (SQLite no requiere usuario)
+
+====================================================================
+
+🔧 CONFIGURACIÓN INICIAL
+====================================================================
+
+Se carga automáticamente en: CONFIGURACIÓN > Parámetros de Costes
+
+Valores por defecto:
+  • Coste de Electricidad: 0.25 €/kWh
+  • Moneda: €
+  • Margen de Beneficio: 30%
+
+Puedes cambiar estos valores en la app sin necesidad de código.
+
+====================================================================
+
+👤 DATOS DE EJEMPLO PRECARGADOS
+====================================================================
+
+CLIENTES (2):
+  1. Empresa ABC S.L.
+     Email: info@abc.com
+     Teléfono: +34 912345678
+     Ciudad: Madrid
+
+  2. Tienda de Juguetes XYZ
+     Email: contacto@xyz.com
+     Teléfono: +34 987654321
+     Ciudad: Barcelona
+
+IMPRESORAS (2):
+  1. Creality Ender 3 Pro
+     Modelo: Ender 3 Pro
+     Área: 220×220×250 mm
+     Potencia: 350W
+     Estado: Activa
+
+  2. Formlabs Form 3
+     Modelo: Form 3
+     Área: 145×145×185 mm
+     Potencia: 200W
+     Estado: Activa
+
+MATERIALES (3):
+  1. PLA Blanco
+     Coste: 15 €/kg
+     Proveedor: Amazon Basics
+
+  2. PETG Negro
+     Coste: 22 €/kg
+     Proveedor: Prusament
+
+  3. Clear Resin
+     Coste: 50 €/kg
+     Proveedor: Formlabs
+
+PIEZAS (3):
+  1. Soporte de teléfono (PLA)
+     Peso: 25g
+     Tiempo estimado: 80 minutos
+
+  2. Engranaje de enganche (PETG)
+     Peso: 18g
+     Tiempo estimado: 60 minutos
+
+  3. Figura de joyería (Resina)
+     Peso: 5g
+     Tiempo estimado: 30 minutos
+
+ÓRDENES (2):
+  1. ORD-2024-001
+     Cliente: Empresa ABC S.L.
+     Estado: En Progreso
+     Items: 5 soportes + 2 engranajes
+
+  2. ORD-2024-002
+     Cliente: Tienda de Juguetes XYZ
+     Estado: Pendiente
+     Items: 10 figuras de joyería
+
+====================================================================
+
+🌐 ACCESO A LA APLICACIÓN
+====================================================================
+
+URL: http://localhost:3000/dashboard
+
+NO REQUIERE:
+  ✗ Usuario
+  ✗ Contraseña
+  ✗ Autenticación
+
+ACCESO DIRECTO AL DASHBOARD
+
+====================================================================
+
+⚡ PUERTO Y SERVIDOR
+====================================================================
+
+PUERTO PREDETERMINADO: 3000
+
+Si el puerto 3000 está ocupado:
+$ npm run dev -- -p 3001
+
+Navegador abrirá automáticamente:
+http://localhost:3000 (o http://localhost:3001)
+
+====================================================================
+
+📝 VARIABLES DE ENTORNO
+====================================================================
+
+Archivo: .env.local
+
+DATABASE_URL="file:./dev.db"
+NODE_ENV="development"
+
+NO SE REQUIEREN:
+  • Claves API
+  • Tokens
+  • URLs externas
+  • Servicios en la nube
+
+====================================================================
+
+🔄 RESET Y LIMPIEZA
+====================================================================
+
+Para resetear TODO y empezar de nuevo:
+
+$ npx prisma db reset
+
+Esto:
+  ✓ Elimina la BD actual
+  ✓ Crea una BD nueva
+  ✓ Ejecuta todas las migraciones
+  ✓ Carga los datos de ejemplo
+
+====================================================================
+
+📱 DESARROLLO Y PRUEBAS
+====================================================================
+
+MODO HOT RELOAD:
+$ npm run dev
+
+El navegador automáticamente recargará al guardar cambios.
+
+MODO PRODUCCIÓN:
+$ npm run build
+$ npm run start
+
+Nota: La aplicación está optimizada para desarrollo.
+Para producción, revisar apartado de NOTAS DE SEGURIDAD.
+
+====================================================================
+
+🚀 PRIMER INICIO
+====================================================================
+
+OPCIÓN A - AUTOMÁTICO (RECOMENDADO):
+  1. Doble-click en INICIAR.bat
+  2. Espera a que se complete todo
+  3. Abre el navegador en http://localhost:3000/dashboard
+
+OPCIÓN B - MANUAL:
+  1. npm install
+  2. npx prisma migrate dev --name init
+  3. npx prisma db seed
+  4. npm run dev
+  5. Abre http://localhost:3000/dashboard
+
+====================================================================
+
+⚠️ IMPORTANTE
+====================================================================
+
+ANTES DE USAR EN PRODUCCIÓN:
+  [ ] Agregar autenticación (NextAuth.js, Auth0, etc)
+  [ ] Implementar HTTPS
+  [ ] Cambiar a base de datos robusta (PostgreSQL, MySQL)
+  [ ] Implementar rate limiting
+  [ ] Agregar validación avanzada
+  [ ] Configurar backups automáticos
+  [ ] Auditoría de accesos
+  [ ] Tests unitarios e integración
+  [ ] Documentación de APIs
+
+====================================================================
+
+🎯 PRÓXIMOS PASOS SUGERIDOS
+====================================================================
+
+1. PERSONALIZACIÓN:
+   - Cambiar nombre de empresa en Sidebar
+   - Ajustar colores en tailwind.config.ts
+   - Agregar logo
+   - Personalizar datos de ejemplo
+
+2. FUNCIONALIDADES:
+   - Agregar autenticación
+   - Exportar reportes a PDF
+   - Integración con email
+   - Cargas de archivos STL
+   - Webhooks para notificaciones
+
+3. OPTIMIZACIÓN:
+   - Agregar caché
+   - Comprimir imágenes
+   - Lazy loading
+   - Paginación en tablas
+
+====================================================================
+
+📞 CONTACTO Y SOPORTE
+====================================================================
+
+Para reportar problemas:
+  1. Revisar logs en consola del navegador (F12)
+  2. Revisar logs en terminal/cmd
+  3. Ver archivo SETUP.txt para solución de problemas
+  4. Consultar README.md para documentación técnica
+
+====================================================================
+
+VERSIÓN: 1.0.0
+FECHA: Abril 2024
+ESTADO: ✅ Listo para usar
+====================================================================

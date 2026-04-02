@@ -1,0 +1,36 @@
+node_modules
+.next
+dist
+*.db
+*.db-journal
+.env
+.env.local
+.env.*.local
+.vscode
+.idea
+*.log
+
+# Environment files
+.env.local
+.env.*.local
+
+# Database
+dev.db
+dev.db-shm
+dev.db-wal
+
+# Build artifacts
+.next/
+out/
+dist/
+
+# Dependencies
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,183 @@
+====================================================================
+INSTALACION MANUAL PASO A PASO
+====================================================================
+
+Si el .bat no funciona, sigue esto manualmente en CMD.
+
+====================================================================
+PASO 1: Abrir CMD en la carpeta del proyecto
+====================================================================
+
+Opcion A (Rapida):
+  1. Abre la carpeta: C:\desarrollo\impresion_3d
+  2. En la barra de direccion, selecciona todo
+  3. Escribe: cmd
+  4. Presiona Enter
+
+Opcion B (Tradicional):
+  1. Abre CMD (Busca "CMD" en Windows)
+  2. Escribe: cd C:\desarrollo\impresion_3d
+  3. Presiona Enter
+
+Deberia decir algo como:
+  C:\desarrollo\impresion_3d>
+
+====================================================================
+PASO 2: Verificar Node.js y NPM
+====================================================================
+
+En CMD, escribe:
+  node --version
+
+Deberia mostrar un numero como: v18.15.0
+
+En CMD, escribe:
+  npm --version
+
+Deberia mostrar un numero como: 9.5.0
+
+Si AMBOS comandos funcionan, continua con PASO 3.
+Si ALGUNO falla, necesitas instalar Node.js desde nodejs.org
+
+====================================================================
+PASO 3: Instalar dependencias
+====================================================================
+
+En CMD, escribe:
+  npm install
+
+Esto instalara todas las librerias necesarias.
+ESTO TOMA 1-2 MINUTOS. Espera a que termine.
+
+Cuando termine deberia decir:
+  added XXX packages
+
+Si hay ERROR, anota el error exacto y muestra en pantalla.
+
+====================================================================
+PASO 4: Crear base de datos
+====================================================================
+
+En CMD, escribe:
+  npx prisma migrate dev --name init
+
+Esto creara la base de datos.
+Presiona Enter cuando pregunte por nombre de migracion.
+
+Cuando termine, deberia haber una carpeta /prisma/migrations/
+
+====================================================================
+PASO 5: Cargar datos de ejemplo
+====================================================================
+
+En CMD, escribe:
+  npx prisma db seed
+
+Esto cargara datos de ejemplo en la BD.
+
+Deberia mostrar algo como:
+  ✓ Settings creados
+  ✓ Clientes creados
+  ... etc
+
+====================================================================
+PASO 6: Iniciar el servidor
+====================================================================
+
+En CMD, escribe:
+  npm run dev
+
+Deberia mostrar algo como:
+  > next dev
+
+Y luego algo como:
+  ▲ Next.js 15.0.0
+  - ready started server on 0.0.0.0:3000
+
+====================================================================
+PASO 7: Abrir en navegador
+====================================================================
+
+Una vez que veas "started server on 0.0.0.0:3000":
+
+  1. Abre tu navegador (Chrome, Firefox, etc)
+  2. En la barra de direccion, escribe:
+     http://localhost:3000/dashboard
+
+  3. Deberia cargar el dashboard con datos
+
+====================================================================
+PASO 8: Detener servidor (cuando termines)
+====================================================================
+
+En CMD, presiona:
+  CTRL+C
+
+El servidor se detendrá.
+
+====================================================================
+SI ALGO FALLA
+====================================================================
+
+Si en PASO 3 (npm install) falla:
+
+  1. Abre Explorador de archivos
+  2. Ve a: C:\desarrollo\impresion_3d
+  3. Busca la carpeta: node_modules
+  4. Elimina esa carpeta (si existe)
+  5. Busca el archivo: package-lock.json
+  6. Elimina ese archivo (si existe)
+  7. Vuelve al CMD
+  8. Escribe: npm install
+  9. Espera a que termine
+
+Si en PASO 4 (prisma migrate) falla:
+
+  1. En CMD escribe: npx prisma db reset
+  2. Presiona 'y' cuando pregunte
+  3. Vuelve al PASO 4
+
+Si en PASO 6 (npm run dev) falla:
+
+  Puerto 3000 ya está en uso:
+    - npm run dev -- -p 3001
+    - Luego abre: http://localhost:3001/dashboard
+
+====================================================================
+COMANDOS RAPIDOS (para copiar-pegar)
+====================================================================
+
+Copia y pega ESTO en CMD:
+
+npm install && npx prisma migrate dev --name init && npx prisma db seed && npm run dev
+
+Esto hace TODOS los pasos en uno.
+Espera a que termine (~3 minutos).
+
+====================================================================
+¿QUE VES EN PANTALLA?
+====================================================================
+
+Si tienes dudas de si algo funciono bien, pregunta:
+
+"Ejecute npm install y veo:
+  [mostra la linea exacta que ves]"
+
+O:
+
+"Ejecute npm run dev y en pantalla veo:
+  [copia exactamente lo que ves]"
+
+====================================================================
+RESUMEN RAPIDO
+====================================================================
+
+1. Abre CMD en C:\desarrollo\impresion_3d
+2. node --version (verifica Node.js)
+3. npm install (instala librerias)
+4. npx prisma migrate dev --name init (crea BD)
+5. npx prisma db seed (carga datos)
+6. npm run dev (inicia servidor)
+7. Abre http://localhost:3000/dashboard en navegador
+
+====================================================================
