@@ -7,8 +7,8 @@ import { Button } from "@/components/Button"
 import { FormField, Input } from "@/components/FormField"
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("admin@impresion3d.local")
-  const [password, setPassword] = useState("Chanduk11")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
@@ -118,14 +118,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Default credentials info */}
-        {!showRegister && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-900">
-            <p className="font-semibold mb-2">🔐 Credenciales de prueba:</p>
-            <p>Email: <code className="bg-blue-100 px-1 rounded">admin@impresion3d.local</code></p>
-            <p>Password: <code className="bg-blue-100 px-1 rounded">Chanduk11</code></p>
-          </div>
-        )}
       </div>
     </div>
   )
