@@ -1,81 +1,24 @@
 @echo off
-setlocal enabledelayedexpansion
 echo ========================================
 echo  Gestor de Impresion 3D
 echo ========================================
 echo.
 
-REM Verificar si es la primera vez (no existe dev.db)
+REM Si no existe la BD, crearla la primera vez
 if not exist "dev.db" (
-    echo [1/5] Primera ejecucion - instalando y configurando...
-    echo.
-    
-    REM Eliminar node_modules para limpiar completamente
-    echo  Limpiando instalacion anterior...
-    if exist "node_modules" (
-        rmdir /s /q "node_modules" 2>/dev/null
-    )
-    
-    REM Instalar dependencias desde cero
-    echo  Instalando dependencias...
-    call npm install
-    if errorlevel 1 (
-        echo Error al instalar dependencias
-        pause
-        exit /b 1
-    )
-    
-    REM Generar Prisma Client
-    echo  Generando Prisma Client...
-    call npx prisma generate
-    if errorlevel 1 (
-        echo Error al generar Prisma
-        pause
-        exit /b 1
-    )
-    
-    REM Crear BD y ejecutar migraciones
-    echo  Creando base de datos...
+    echo Creando base de datos la primera vez...
     call npx prisma migrate deploy
-    if errorlevel 1 (
-        echo Error en migraciones
-        pause
-        exit /b 1
-    )
-    
-    echo OK
-    echo.
-) else (
-    echo [1/5] Base de datos ya existe
-    echo.
-    
-    REM Solo actualizar dependencias
-    echo  Verificando dependencias...
-    call npm install --prefer-offline
-    echo OK
     echo.
 )
 
-echo ========================================
-echo [2/5] Iniciando servidor...
-echo ========================================
+echo Iniciando servidor en http://localhost:3000
 echo.
-echo URL: http://localhost:3000
-echo.
-
-REM Esperar 3 segundos para que Next.js inicie
-echo [3/5] Esperando a que el servidor inicie...
-timeout /t 3 /nobreak
+timeout /t 2 /nobreak
 
 REM Abrir navegador
-echo [4/5] Abriendo navegador...
 start http://localhost:3000
 
-echo [5/5] Listo!
-echo.
-echo Presiona Ctrl+C para detener el servidor
-echo.
-
+REM Iniciar servidor
 call npm run dev
 
 pause
