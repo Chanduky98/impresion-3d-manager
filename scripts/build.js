@@ -3,24 +3,24 @@
 const { execSync } = require('child_process');
 
 const isVercel = process.env.VERCEL === '1';
+const tursoUrl = process.env.TURSO_URL || '';
 const databaseUrl = process.env.DATABASE_URL || '';
-const isLibSQL = databaseUrl.startsWith('libsql://');
 
 console.log('Build environment:');
 console.log(`  - Vercel: ${isVercel}`);
-console.log(`  - Database: ${isLibSQL ? 'libSQL (Turso)' : 'SQLite (local)'}`);
+console.log(`  - Has TURSO_URL: ${!!tursoUrl}`);
 console.log('');
 
 try {
-  // Crear env para el build
   const buildEnv = { ...process.env };
 
-  // Si es libSQL en Vercel, usar dummy URL durante el build
-  // Prisma validará que la URL sea "file://" en schema.prisma
-  // La URL real de libSQL se usará en runtime después del deployment
-  if (isLibSQL) {
-    console.log('Using dummy DATABASE_URL for build (will use real Turso URL at runtime)...');
+  // En Vercel, DATABASE_URL debe ser dummy (file:./build.db) para que Prisma valide
+  // TURSO_URL contiene la URL real y será usado por lib/prisma.ts en runtime
+  if (isVercel && tursoUrl) {
+    console.log('Using dummy DATABASE_URL for build...');
     buildEnv.DATABASE_URL = 'file:./build.db';
+    // Mantener TURSO_URL para que lib/prisma.ts lo use en runtime
+    console.log('TURSO_URL will be used in runtime...');
   }
 
   // Generar Prisma Client
@@ -30,8 +30,7 @@ try {
     env: buildEnv
   });
 
-  // Ejecutar Next.js build con dummy URL también
-  // En Vercel, después del deployment, el environment variable DATABASE_URL será reemplazado por la real
+  // Ejecutar Next.js build
   console.log('\nBuilding Next.js...');
   execSync('next build', {
     stdio: 'inherit',
