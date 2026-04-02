@@ -1,49 +1,26 @@
 @echo off
-setlocal enabledelayedexpansion
-
 echo ========================================
 echo  Gestor de Impresion 3D
 echo ========================================
 echo.
 
-REM Cargar variables de .env.local
-if exist ".env.local" (
-    for /f "delims== tokens=1,*" %%a in (.env.local) do (
-        if not "%%a"=="" (
-            if not "%%a:~0,1%%"="#" (
-                set "%%a=%%b"
-            )
-        )
-    )
-)
+REM Matar procesos en puertos 3000 y 3001 (opcional, puede fallar)
+echo Liberando puertos...
+taskkill /F /IM node.exe 2>/dev/null
 
-REM Verificar que DATABASE_URL está cargado
-if "!DATABASE_URL!"=="" (
-    echo Error: DATABASE_URL no encontrado en .env.local
-    pause
-    exit /b 1
-)
-
-REM Matar procesos que usen puerto 3000 y 3001
-echo Liberando puertos 3000 y 3001...
-for /f "tokens=5" %%a in ('netstat -ano ^| findstr :3000') do taskkill /PID %%a /F 2>/dev/null
-for /f "tokens=5" %%a in ('netstat -ano ^| findstr :3001') do taskkill /PID %%a /F 2>/dev/null
-
-REM Si no existe la BD, crearla la primera vez
+REM Si no existe BD, crearla
 if not exist "dev.db" (
-    echo Creando base de datos la primera vez...
+    echo Creando base de datos...
     call npx prisma migrate deploy
-    echo.
 )
 
-echo Iniciando servidor en http://localhost:3000
 echo.
+echo Abriendo navegador...
 timeout /t 2 /nobreak
-
-REM Abrir navegador
 start http://localhost:3000
 
-REM Iniciar servidor
+echo.
+echo Iniciando servidor...
 call npm run dev
 
 pause
