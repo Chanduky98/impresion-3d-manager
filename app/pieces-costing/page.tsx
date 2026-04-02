@@ -24,6 +24,7 @@ interface PieceWithCosting {
   name: string
   weight: number
   estimatedTime: number
+  quantity: number
   status: string
   material: Material
   description?: string
@@ -50,6 +51,7 @@ export default function PiecesCostingPage() {
     description: "",
     weight: 10,
     estimatedTime: 60,
+    quantity: 1,
     materialId: "",
     status: "available",
     marginPercent: 30,
@@ -109,16 +111,24 @@ export default function PiecesCostingPage() {
           ? printersData.reduce((sum: number, p: Printer) => sum + p.powerConsumption, 0) / printersData.length
           : 300
 
-        const materialCost = material ? (piece.weight / 1000) * material.costPerKg : 0
+        const quantity = piece.quantity || 1 // Obtener cantidad, default 1
+
+        // Costos por UNIDAD
+        const materialCostPerUnit = material ? (piece.weight / 1000) * material.costPerKg : 0
         const printingHours = piece.estimatedTime / 3600 // estimatedTime está en segundos, convertir a horas
-        const electricityCost = (avgPrinterPower / 1000) * printingHours * settings.electricityCostPerKwh
-        const totalCost = materialCost + electricityCost
+        const electricityCostPerUnit = (avgPrinterPower / 1000) * printingHours * settings.electricityCostPerKwh
+        const totalCostPerUnit = materialCostPerUnit + electricityCostPerUnit
+
+        // Costos TOTALES (multiplicados por cantidad)
+        const materialCost = materialCostPerUnit * quantity
+        const electricityCost = electricityCostPerUnit * quantity
+        const totalCost = totalCostPerUnit * quantity
 
         const marginPercent = settings.defaultMarginPercent
         const sellingPrice = totalCost * (1 + marginPercent / 100)
 
         // Usar customSellingPrice si existe, si no usar el calculado
-        const finalSellingPrice = piece.customSellingPrice || sellingPrice
+        const finalSellingPrice = piece.customSellingPrice ? piece.customSellingPrice * quantity : sellingPrice
         const margin = finalSellingPrice - totalCost
 
         return {
@@ -157,6 +167,7 @@ export default function PiecesCostingPage() {
         name: formData.name,
         weight: parseFloat(String(formData.weight)),
         estimatedTime: parseInt(String(formData.estimatedTime)) * 60, // minutos a segundos
+        quantity: parseInt(String(formData.quantity)),
         materialId: formData.materialId,
         status: formData.status,
       }
