@@ -12,26 +12,30 @@ console.log(`  - Database: ${isLibSQL ? 'libSQL (Turso)' : 'SQLite (local)'}`);
 console.log('');
 
 try {
-  // Para prisma generate, usar dummy URL si es libSQL (Prisma valida la URL del schema)
-  const prismaEnv = { ...process.env };
+  // Crear env para el build
+  const buildEnv = { ...process.env };
 
+  // Si es libSQL en Vercel, usar dummy URL durante el build
+  // Prisma validará que la URL sea "file://" en schema.prisma
+  // La URL real de libSQL se usará en runtime después del deployment
   if (isLibSQL) {
-    console.log('Using dummy DATABASE_URL for prisma generate (Prisma validation workaround)...');
-    prismaEnv.DATABASE_URL = 'file:./build.db';
+    console.log('Using dummy DATABASE_URL for build (will use real Turso URL at runtime)...');
+    buildEnv.DATABASE_URL = 'file:./build.db';
   }
 
   // Generar Prisma Client
   console.log('Generating Prisma Client...');
   execSync('npx prisma generate', {
     stdio: 'inherit',
-    env: prismaEnv
+    env: buildEnv
   });
 
-  // Ejecutar Next.js build con DATABASE_URL original (para el adaptador LibSQL)
+  // Ejecutar Next.js build con dummy URL también
+  // En Vercel, después del deployment, el environment variable DATABASE_URL será reemplazado por la real
   console.log('\nBuilding Next.js...');
   execSync('next build', {
     stdio: 'inherit',
-    env: process.env  // Usar la URL real aquí
+    env: buildEnv
   });
 
   console.log('\n✓ Build completed successfully!');
