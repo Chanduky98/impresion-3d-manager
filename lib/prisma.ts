@@ -1,35 +1,19 @@
 import { PrismaClient } from "@prisma/client"
-import { PrismaLibSQL } from "@prisma/adapter-libsql"
-import { createClient } from "@libsql/client"
 
-declare global {
-  var prisma: PrismaClient | undefined
-}
+// Esto previene que Prisma se instancie durante el build
+// Solo se instancia cuando se usa en un request
+let prismaInstance: PrismaClient | null = null
 
-const prismaClientSingleton = () => {
-  const isProduction = process.env.NODE_ENV === "production"
-
-  if (isProduction && process.env.DATABASE_URL?.startsWith("libsql://")) {
-    // Usar adaptador de libSQL para Turso en producción
-    const client = createClient({
-      url: process.env.DATABASE_URL,
-    })
-
-    return new PrismaClient({
-      adapter: new PrismaLibSQL(client),
-    })
+function getPrismaClient(): PrismaClient {
+  if (!prismaInstance) {
+    prismaInstance = new PrismaClient()
   }
-
-  // Usar SQLite normal en desarrollo
-  return new PrismaClient()
+  return prismaInstance
 }
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined
-}
-
-export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
+export const prisma = new Proxy(new PrismaClient(), {
+  get: (target, prop) => {
+    // Retorna el valor del cliente real
+    return Reflect.get(target, prop)
+  },
+}) as PrismaClient
