@@ -1,57 +1,63 @@
 @echo off
 echo ========================================
-echo  Gestor de Impresion 3D - Startup
+echo  Gestor de Impresion 3D
 echo ========================================
 echo.
 
-REM Instalar dependencias
-echo [1/4] Instalando dependencias...
-call npm install
-if errorlevel 1 (
-    echo Error al instalar dependencias
-    pause
-    exit /b 1
-)
-echo OK
-echo.
-
-REM Generar Prisma Client
-echo [2/4] Generando Prisma Client...
-call npx prisma generate
-if errorlevel 1 (
-    echo Error al generar Prisma
-    pause
-    exit /b 1
-)
-echo OK
-echo.
-
-REM Migrar base de datos
-echo [3/4] Sincronizando base de datos...
-call npx prisma migrate deploy
-if errorlevel 1 (
-    echo Error en migraciones. Intentando crear nuevo schema...
-    call npx prisma db push --skip-generate
+REM Verificar si es la primera vez (no existe dev.db)
+if not exist "dev.db" (
+    echo [1/3] Primera ejecucion - instalando y configurando...
+    echo.
+    
+    REM Instalar dependencias
+    echo  Instalando dependencias...
+    call npm install
     if errorlevel 1 (
-        echo Error al sincronizar BD
+        echo Error al instalar dependencias
         pause
         exit /b 1
     )
+    
+    REM Generar Prisma Client
+    echo  Generando Prisma Client...
+    call npx prisma generate
+    if errorlevel 1 (
+        echo Error al generar Prisma
+        pause
+        exit /b 1
+    )
+    
+    REM Crear BD y ejecutar migraciones
+    echo  Creando base de datos...
+    call npx prisma migrate deploy
+    if errorlevel 1 (
+        echo Error en migraciones
+        pause
+        exit /b 1
+    )
+    
+    echo OK
+    echo.
+) else (
+    echo [1/3] Base de datos ya existe
+    echo.
+    
+    REM Solo actualizar dependencias si package.json cambio
+    echo  Verificando dependencias...
+    call npm install --prefer-offline
+    echo OK
+    echo.
 )
-echo OK
-echo.
-
-REM Crear usuario admin si no existe
-echo [4/4] Verificando usuario admin...
-REM (Prisma seed se ejecutaría aquí si lo tuvieras)
-echo OK
-echo.
 
 echo ========================================
-echo  Iniciando servidor...
+echo [2/3] Iniciando servidor...
 echo ========================================
+echo.
 echo URL: http://localhost:3000
 echo.
+echo Presiona Ctrl+C para detener el servidor
+echo.
+
 call npm run dev
 
 pause
