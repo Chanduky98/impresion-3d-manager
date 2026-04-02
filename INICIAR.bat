@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 echo ========================================
 echo  Gestor de Impresion 3D
 echo ========================================
@@ -9,19 +10,19 @@ if not exist "dev.db" (
     echo [1/5] Primera ejecucion - instalando y configurando...
     echo.
     
-    REM Instalar dependencias
+    REM Eliminar node_modules para limpiar completamente
+    echo  Limpiando instalacion anterior...
+    if exist "node_modules" (
+        rmdir /s /q "node_modules" 2>/dev/null
+    )
+    
+    REM Instalar dependencias desde cero
     echo  Instalando dependencias...
     call npm install
     if errorlevel 1 (
         echo Error al instalar dependencias
         pause
         exit /b 1
-    )
-    
-    REM Limpiar Prisma cache
-    echo  Limpiando cache de Prisma...
-    if exist "node_modules\.prisma" (
-        rmdir /s /q "node_modules\.prisma" >/dev/null 2>&1
     )
     
     REM Generar Prisma Client
@@ -48,7 +49,7 @@ if not exist "dev.db" (
     echo [1/5] Base de datos ya existe
     echo.
     
-    REM Solo actualizar dependencias si package.json cambio
+    REM Solo actualizar dependencias
     echo  Verificando dependencias...
     call npm install --prefer-offline
     echo OK
