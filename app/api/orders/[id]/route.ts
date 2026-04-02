@@ -1,11 +1,10 @@
 export const dynamic = "force-dynamic"
 
 import { NextRequest, NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { validateSession } from "@/lib/auth"
 import { withCORS } from "@/lib/middleware"
 
-const prisma = new PrismaClient()
 
 async function requireAuth(request: NextRequest) {
   const token = request.headers.get("authorization")?.replace("Bearer ", "")
