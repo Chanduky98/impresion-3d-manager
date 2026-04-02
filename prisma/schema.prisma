@@ -97,6 +97,7 @@ model Piece {
   fileSize              Float?     // MB
   weight                Float      // Gramos
   estimatedTime         Int        // Segundos
+  quantity              Int        @default(1) // Cantidad de unidades a fabricar (ej: 100)
   materialId            String
   material              Material   @relation(fields: [materialId], references: [id], onDelete: Cascade)
   status                String     @default("available") // available, in_progress, completed, discontinued

@@ -18,6 +18,7 @@ interface Piece {
   name: string
   weight: number
   estimatedTime: number
+  quantity: number
   material: Material
   description?: string
 }
@@ -34,6 +35,7 @@ export default function PiecesPage() {
     description: "",
     weight: 10,
     estimatedTime: 60,
+    quantity: 1,
     materialId: "",
     status: "available",
     isPersonal: false,
@@ -188,6 +190,7 @@ export default function PiecesPage() {
       description: "",
       weight: 10,
       estimatedTime: 60,
+      quantity: 1,
       materialId: "",
       status: "available",
       isPersonal: false,
@@ -201,6 +204,7 @@ export default function PiecesPage() {
       description: piece.description || "",
       weight: piece.weight,
       estimatedTime: piece.estimatedTime / 60, // convertir segundos a minutos para el formulario
+      quantity: piece.quantity,
       materialId: piece.material.id,
       status: (piece as any).status || "available",
       isPersonal: (piece as any).isPersonal || false,
@@ -245,7 +249,7 @@ export default function PiecesPage() {
             <tbody className="divide-y divide-border">
               {pieces.map((piece) => (
                 <tr key={piece.id} className="hover:bg-muted/50 transition-colors">
-                  <td className="px-6 py-4 font-medium">{piece.name}</td>
+                  <td className="px-6 py-4 font-medium">{piece.name} <span className="text-muted-foreground text-sm">x{piece.quantity}</span></td>
                   <td className="px-6 py-4">{piece.material.name}</td>
                   <td className="px-6 py-4">{piece.weight}</td>
                   <td className="px-6 py-4 text-sm">{Math.round(piece.estimatedTime / 60)} min</td>
@@ -323,6 +327,16 @@ export default function PiecesPage() {
                 setFormData({ ...formData, estimatedTime: parseInt(e.target.value) })
               }
               placeholder="Ej: 80"
+            />
+          </FormField>
+
+          <FormField label="Cantidad de Unidades" required>
+            <Input
+              type="number"
+              min="1"
+              value={formData.quantity}
+              onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) })}
+              placeholder="Ej: 100"
             />
           </FormField>
 
