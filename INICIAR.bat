@@ -1,8 +1,28 @@
 @echo off
+setlocal enabledelayedexpansion
+
 echo ========================================
 echo  Gestor de Impresion 3D
 echo ========================================
 echo.
+
+REM Cargar variables de .env.local
+if exist ".env.local" (
+    for /f "delims== tokens=1,*" %%a in (.env.local) do (
+        if not "%%a"=="" (
+            if not "%%a:~0,1%%"="#" (
+                set "%%a=%%b"
+            )
+        )
+    )
+)
+
+REM Verificar que DATABASE_URL está cargado
+if "!DATABASE_URL!"=="" (
+    echo Error: DATABASE_URL no encontrado en .env.local
+    pause
+    exit /b 1
+)
 
 REM Matar procesos que usen puerto 3000 y 3001
 echo Liberando puertos 3000 y 3001...
