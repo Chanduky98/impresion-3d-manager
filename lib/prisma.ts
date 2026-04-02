@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import { libsql } from "@prisma/adapter-libsql"
+import { PrismaLibSQL } from "@prisma/adapter-libsql"
 import { createClient } from "@libsql/client"
 
 declare global {
@@ -16,7 +16,7 @@ const prismaClientSingleton = () => {
     })
 
     return new PrismaClient({
-      adapter: libsql(client),
+      adapter: new PrismaLibSQL(client),
     })
   }
 
